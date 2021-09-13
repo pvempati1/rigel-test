@@ -1,0 +1,99 @@
+{
+  "modelVersion": "1.0",
+  "projectName": "data_transfer",
+  "platform": "/proj/xbuilds/2021.2_daily_latest/internal_platforms/xilinx_u250_gen3x16_xdma_4_1_202020_1/xilinx_u250_gen3x16_xdma_4_1_202020_1.xpfm",
+  "components": [
+    {
+      "name": "data_transfer",
+      "type": "HOST",
+      "configuration": {
+        "componentType": "HOST",
+        "hostToolchainConfigurations": [
+          {
+            "configId": "data_transfer.default",
+            "compilerSymbols": [],
+            "compilerIncludes": [
+              "common/libs/common/includes/xcl2"
+            ],
+            "compilerOptions": [],
+            "linkerLibraries": [],
+            "linkerLibraryPaths": [],
+            "linkerOptions": []
+          }
+        ]
+      }
+    },
+    {
+      "name": "pl_kernel",
+      "type": "PL_KERNEL",
+      "configuration": {
+        "componentType": "PL_KERNEL",
+        "plKernels": [
+          {
+            "kernelName": "dummy_kernel",
+            "kernelSourceFiles": [
+              "pl_kernel/src/dummy_kernel.cpp"
+            ],
+            "cfgFiles": [
+              "pl_kernel/dummy_kernel-compile.cfg"
+            ]
+          }
+        ],
+        "userManagedKernels": [],
+        "vppCompilerConfigurations": [
+          {
+            "configId": "pl_kernel.default",
+            "symbols": [],
+            "includes": [],
+            "options": [],
+            "kernelOptions": {},
+            "buildDatafiles": []
+          }
+        ]
+      }
+    },
+    {
+      "name": "hw_link",
+      "type": "HW_LINKER",
+      "configuration": {
+        "componentType": "HW_LINKER",
+        "containers": [
+          {
+            "name": "dummy_kernel",
+            "kernels": {
+              "dummy_kernel": "pl_kernel"
+            },
+            "cfgFiles": [
+              "hw_link/dummy_kernel-link.cfg"
+            ]
+          }
+        ],
+        "vppLinkerConfigurations": [
+          {
+            "configId": "hw_link.default",
+            "options": [],
+            "containerOptions": {},
+            "buildDatafiles": []
+          }
+        ]
+      }
+    }
+  ],
+  "buildConfigurations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "supportedTargets": [
+        "SW_EMU",
+        "HW_EMU",
+        "HARDWARE"
+      ],
+      "componentConfigMap": {
+        "data_transfer": "data_transfer.default",
+        "pl_kernel": "pl_kernel.default",
+        "hw_link": "hw_link.default"
+      }
+    }
+  ],
+  "activeBuildConfigId": "default"
+}
