@@ -1,0 +1,99 @@
+{
+  "modelVersion": "1.0",
+  "projectName": "copy_buffer",
+  "platform": "/proj/xbuilds/2021.2_daily_latest/internal_platforms/xilinx_u250_gen3x16_xdma_4_1_202020_1/xilinx_u250_gen3x16_xdma_4_1_202020_1.xpfm",
+  "components": [
+    {
+      "name": "copy_buffer",
+      "type": "HOST",
+      "configuration": {
+        "componentType": "HOST",
+        "hostToolchainConfigurations": [
+          {
+            "configId": "copy_buffer.default",
+            "compilerSymbols": [],
+            "compilerIncludes": [
+              "common/libs/common/includes/xcl2"
+            ],
+            "compilerOptions": [],
+            "linkerLibraries": [],
+            "linkerLibraryPaths": [],
+            "linkerOptions": []
+          }
+        ]
+      }
+    },
+    {
+      "name": "pl_kernel",
+      "type": "PL_KERNEL",
+      "configuration": {
+        "componentType": "PL_KERNEL",
+        "plKernels": [
+          {
+            "kernelName": "vector_add",
+            "kernelSourceFiles": [
+              "pl_kernel/src/vector_addition.cpp"
+            ],
+            "cfgFiles": [
+              "pl_kernel/vector_add-compile.cfg"
+            ]
+          }
+        ],
+        "userManagedKernels": [],
+        "vppCompilerConfigurations": [
+          {
+            "configId": "pl_kernel.default",
+            "symbols": [],
+            "includes": [],
+            "options": [],
+            "kernelOptions": {},
+            "buildDatafiles": []
+          }
+        ]
+      }
+    },
+    {
+      "name": "hw_link",
+      "type": "HW_LINKER",
+      "configuration": {
+        "componentType": "HW_LINKER",
+        "containers": [
+          {
+            "name": "vector_addition",
+            "kernels": {
+              "vector_add": "pl_kernel"
+            },
+            "cfgFiles": [
+              "hw_link/vector_addition-link.cfg"
+            ]
+          }
+        ],
+        "vppLinkerConfigurations": [
+          {
+            "configId": "hw_link.default",
+            "options": [],
+            "containerOptions": {},
+            "buildDatafiles": []
+          }
+        ]
+      }
+    }
+  ],
+  "buildConfigurations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "supportedTargets": [
+        "SW_EMU",
+        "HW_EMU",
+        "HARDWARE"
+      ],
+      "componentConfigMap": {
+        "copy_buffer": "copy_buffer.default",
+        "pl_kernel": "pl_kernel.default",
+        "hw_link": "hw_link.default"
+      }
+    }
+  ],
+  "activeBuildConfigId": "default"
+}
